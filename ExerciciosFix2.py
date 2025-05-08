@@ -90,19 +90,18 @@ Temperaturas_rec = pd.read_csv("temperaturas.csv")
 print(60*'-')
 print(Temperaturas_rec)
 print(60*'-')
-arrayNumpy = Temperaturas_rec.values # transformando o arquivo cvs importado pelo pandas, como um arquivo para ser lido no numpy
-
+Temperaturas_array = np.array(Temperaturas_rec['Temperatura_Media_C']) # Filtrando a coluna temperaturas , e criando um array no numpy, para calcula as medidas
 # a) Média
-Media = np.mean(arrayNumpy[:, 1])
+Media = np.mean(Temperaturas_array)
 
 # b) Mediana
-Mediana = np.median(arrayNumpy[:, 1])
+Mediana = np.median(Temperaturas_array)
 
 # c) Moda
 Moda = Temperaturas_rec['Temperatura_Media_C'].mode()
 
 # d) Amplitude
-Amplitude_2 = np.ptp(arrayNumpy[:, 1])
+Amplitude_2 = np.ptp(Temperaturas_array)
 
 # e) Variância populacional e amostral
 Var_Amostral2 = Temperaturas_rec['Temperatura_Media_C'].var(ddof=1)
@@ -117,7 +116,7 @@ Dp_pop2 = Temperaturas_rec['Temperatura_Media_C'].std(ddof=0)
 Q1 = Temperaturas_rec['Temperatura_Media_C'].quantile(0.25)
 Q2 = Temperaturas_rec['Temperatura_Media_C'].quantile(0.50)
 Q3 = Temperaturas_rec['Temperatura_Media_C'].quantile(0.75)
-IIQ3 = Q2 - Q1
+IIQ3 = Q3 - Q1
 
 # Saidas:
 print(60*'-')

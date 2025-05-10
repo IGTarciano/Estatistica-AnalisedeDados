@@ -2,6 +2,7 @@
 
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 # Exercício 01 - Medidas de Dispersão
 Dados = np.array([2, 0, 1, 3, 2, 2, 0, 1, 2, 4])# criando a estrutura de dados principal
@@ -133,12 +134,3 @@ print(60*'-')
 print(f'# Exercicio 05: Desvio padrao populacional e amostral, desvio padrao amostral {Var_Amostral2:.2f} e desvil padrao {Var_pop2:.2f}')
 print(60*'-')
 print(f'# Exercicio 05: Quantil 1: {Q1}; Quantil 2: {Q2}; Quantil 3:{Q3}. Intervalo interquantil: {IIQ3}')
-
-
-
-
-
-
-
-
-

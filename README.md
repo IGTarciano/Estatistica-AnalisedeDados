@@ -20,9 +20,10 @@ Mais para frente será introduzido outros conceitos e programas.
 
 ## Bibliotecas inclusas
 
-- python: pandas
-- python: numpy
-- python: random
+- python: pandas;
+- python: numpy;
+- python: random;
+- python: matplotlib e pyplot.
 
 # Autor
 

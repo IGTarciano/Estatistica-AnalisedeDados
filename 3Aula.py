@@ -44,7 +44,7 @@ plt.plot(trimestres,taxa_desemprego,linestyle='dashed',)
 # linestyle = ; conseguimos mudar o formato da linha
 # markert = ; conseguimos alterar os marcadores
 plt.xlabel('Trimestres 2023 e 2024') # legenda do eixo x
-plt.ylabel('Taxa de desemprego') # legenda do eixo y
+plt.ylabel('Ta3xa de desemprego') # legenda do eixo y
 plt.title('Taxa de desemprego dos anos de 2023 a 2024') # titulo do grafico
 plt.grid()
 plt.show()

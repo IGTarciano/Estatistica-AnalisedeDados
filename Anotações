@@ -1,0 +1,69 @@
+import pandas as pd
+
+# Carregar o dataset
+# Certifique-se de que o arquivo "Online Retail.xlsx" está no mesmo diretório
+# ou forneça o caminho completo.
+try:
+    DataFrame_OnlineRetail = pd.read_excel("Online Retail.xlsx")
+except FileNotFoundError:
+    print("Erro: Arquivo 'Online Retail.xlsx' não encontrado. Verifique o caminho.")
+    # Encerre o script ou trate o erro como apropriado
+    exit()
+
+
+# --- Limpeza Sequencial e Criação de Cópia Explícita ---
+# 1. Remover linhas com valores ausentes
+# 2. Remover linhas duplicadas
+# 3. Usar .copy() para garantir que temos um DataFrame independente
+DataFrame_OnlineRetail_Clean = DataFrame_OnlineRetail.dropna().drop_duplicates().copy()
+
+print(f"Formato do DataFrame após limpeza: {DataFrame_OnlineRetail_Clean.shape}")
+
+# --- Criação de Novas Colunas usando .loc --- 
+
+# Calcular TotalValue
+# Usar .loc[:, 'NovaColuna'] para atribuir à coluna no DataFrame limpo
+DataFrame_OnlineRetail_Clean.loc[:, 'TotalValue'] = DataFrame_OnlineRetail_Clean['Quantity'] * DataFrame_OnlineRetail_Clean['UnitPrice']
+
+# Converter InvoiceDate para datetime (apenas uma vez para eficiência)
+try:
+    invoice_date_dt = pd.to_datetime(DataFrame_OnlineRetail_Clean['InvoiceDate'])
+except Exception as e:
+    print(f"Erro ao converter 'InvoiceDate' para datetime: {e}")
+    # Considere tratar ou remover linhas com datas inválidas
+    # Por enquanto, vamos continuar, mas as colunas de data podem falhar
+
+# Atribuir a coluna convertida de volta (opcional, mas bom para consistência de tipo)
+DataFrame_OnlineRetail_Clean.loc[:, 'InvoiceDate'] = invoice_date_dt
+
+# Extrair componentes da data usando a série já convertida e .loc
+DataFrame_OnlineRetail_Clean.loc[:, 'Year'] = invoice_date_dt.dt.year
+DataFrame_OnlineRetail_Clean.loc[:, 'Month'] = invoice_date_dt.dt.month
+DataFrame_OnlineRetail_Clean.loc[:, 'Day'] = invoice_date_dt.dt.day
+DataFrame_OnlineRetail_Clean.loc[:, 'DayOfWeek'] = invoice_date_dt.dt.dayofweek
+
+# Verificar as primeiras linhas com as novas colunas
+print("\nDataFrame com novas colunas:")
+print(DataFrame_OnlineRetail_Clean.head())
+
+# --- Agrupamento --- 
+# Ordenando os itens do maior para o menor faturamento durante os meses:
+# Esta parte do seu código já estava correta e não causa o warning
+Year_Month_max_sales_df = DataFrame_OnlineRetail_Clean.groupby(['Year','Month'])['TotalValue'].sum().sort_values(ascending=False)
+
+print("\nFaturamento Total por Ano/Mês (Ordenado):")
+print(Year_Month_max_sales_df)
+
+# --- Fim do Código Corrigido ---
+```
+
+## Principais Melhorias:
+
+1.  **Limpeza Sequencial com `.copy()`**: `DataFrame_OnlineRetail.dropna().drop_duplicates().copy()` aplica as duas limpezas em sequência e o `.copy()` final garante que `DataFrame_OnlineRetail_Clean` é um objeto independente, eliminando a ambiguidade para o pandas.
+2.  **Uso de `.loc`**: Todas as novas colunas (`TotalValue`, `Year`, etc.) são criadas usando `.loc[:, 'NomeColuna'] = ...`. Isso é explícito e a forma recomendada para evitar o `SettingWithCopyWarning`.
+3.  **Eficiência na Conversão de Data**: `pd.to_datetime` é chamado apenas uma vez na coluna `InvoiceDate`. A série resultante (`invoice_date_dt`) é usada para extrair todos os componentes (`.dt.year`, `.dt.month`, etc.), o que é mais rápido do que converter a coluna repetidamente.
+4.  **Tratamento de Erro Básico**: Adicionei blocos `try-except` para o carregamento do arquivo e conversão de data, que são operações comuns onde podem ocorrer erros.
+5.  **Ordenação no GroupBy**: Adicionei `.sort_values(ascending=False)` ao final do `groupby` para realmente ordenar os resultados como descrito no seu comentário.
+
+Ao aplicar essas mudanças, você eliminará os avisos e terá um código mais robusto e eficiente.
+

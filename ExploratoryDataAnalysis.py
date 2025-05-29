@@ -51,5 +51,15 @@ plt.grid(axis='y', linestyle='--', alpha=0.7) # Adiciona linhas de grade horizon
 plt.tight_layout() # Ajusta o layout para evitar cortes
 plt.show()
 
-# Relacionar: Produto x Qtd x Valor
+# Relacionar: Produto(codigo produto e descrição) x Qtd x Valor
 
+Product_Qnt_value = DataFrame_OnlineRetail_Clean.groupby(['Description'])[['Quantity','TotalValue']].sum().sort_values(by='TotalValue',ascending=False).head(10).copy()
+
+plt.figure(figsize=(12,5))
+Product_Qnt_value['TotalValue'].plot(kind=bar,color='skyblue')
+plt.title('Produto com maior faturamento')
+plt.xlabel('Valor total')
+plt.ylabel('Produto: descrição')
+plt.xticks(rotation=45,ha='right')
+plt.grid()
+plt.show()

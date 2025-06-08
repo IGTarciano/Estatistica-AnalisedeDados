@@ -55,15 +55,13 @@ print("\nFaturamento Total por Ano/Mês (Ordenado):")
 print(Year_Month_max_sales_df)
 
 # --- Fim do Código Corrigido ---
-```
-
 ## Principais Melhorias:
 
-1.  **Limpeza Sequencial com `.copy()`**: `DataFrame_OnlineRetail.dropna().drop_duplicates().copy()` aplica as duas limpezas em sequência e o `.copy()` final garante que `DataFrame_OnlineRetail_Clean` é um objeto independente, eliminando a ambiguidade para o pandas.
-2.  **Uso de `.loc`**: Todas as novas colunas (`TotalValue`, `Year`, etc.) são criadas usando `.loc[:, 'NomeColuna'] = ...`. Isso é explícito e a forma recomendada para evitar o `SettingWithCopyWarning`.
-3.  **Eficiência na Conversão de Data**: `pd.to_datetime` é chamado apenas uma vez na coluna `InvoiceDate`. A série resultante (`invoice_date_dt`) é usada para extrair todos os componentes (`.dt.year`, `.dt.month`, etc.), o que é mais rápido do que converter a coluna repetidamente.
-4.  **Tratamento de Erro Básico**: Adicionei blocos `try-except` para o carregamento do arquivo e conversão de data, que são operações comuns onde podem ocorrer erros.
-5.  **Ordenação no GroupBy**: Adicionei `.sort_values(ascending=False)` ao final do `groupby` para realmente ordenar os resultados como descrito no seu comentário.
+#1.  **Limpeza Sequencial com `.copy()`**: `DataFrame_OnlineRetail.dropna().drop_duplicates().copy()` aplica as duas limpezas em sequência e o `.copy()` final garante que `DataFrame_OnlineRetail_Clean` é um objeto independente, eliminando a ambiguidade para o pandas.
+#2.  **Uso de `.loc`**: Todas as novas colunas (`TotalValue`, `Year`, etc.) são criadas usando `.loc[:, 'NomeColuna'] = ...`. Isso é explícito e a forma recomendada para evitar o `SettingWithCopyWarning`.
+#3.  **Eficiência na Conversão de Data**: `pd.to_datetime` é chamado apenas uma vez na coluna `InvoiceDate`. A série resultante (`invoice_date_dt`) é usada para extrair todos os componentes (`.dt.year`, `.dt.month`, etc.), o que é mais rápido do que converter a coluna repetidamente.
+#4.  **Tratamento de Erro Básico**: Adicionei blocos `try-except` para o carregamento do arquivo e conversão de data, que são operações comuns onde podem ocorrer erros.
+#5.  **Ordenação no GroupBy**: Adicionei `.sort_values(ascending=False)` ao final do `groupby` para realmente ordenar os resultados como descrito no seu comentário.
 
-Ao aplicar essas mudanças, você eliminará os avisos e terá um código mais robusto e eficiente.
+#Ao aplicar essas mudanças, você eliminará os avisos e terá um código mais robusto e eficiente.
 

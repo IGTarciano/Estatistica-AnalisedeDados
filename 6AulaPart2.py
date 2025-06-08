@@ -39,3 +39,39 @@ except ValueError:
 # Teste de hipotese:
 
 # função descritiva acumulada: stats.norm.cdf(zvalue)
+
+# Exercicio 19: 
+
+media = 1500
+dp = 120
+n = 45
+media_amostral = 1560
+se = 0.01
+# Media ; H0 = 1500
+# H1 > 1500
+
+try:
+    ErroPdr = dp/np.sqrt(n)
+    z = stats.norm.ppf(1-se)
+    vlr_critico = 1500 + z*ErroPdr
+    if vlr_critico < media_amostral:
+        print(f'H0 rejeitado')
+    else: print(f'H0 aceito')
+except TypeError:
+    print('Tente novamente')
+    
+# Exercicio 20:
+
+try:
+    Media = 20
+    n = 15
+    media_amostral = 23
+    dp = 6
+    se = 0.05
+    grau_linberdade = n - 1
+    ErroPdr = dp/np.sqrt(n)
+    z = stats.norm.ppf(1-se,grau_linberdade)
+    vlr_critico = Media + z*ErroPdr
+except TypeError:
+    print('Tente novamente ')
+
